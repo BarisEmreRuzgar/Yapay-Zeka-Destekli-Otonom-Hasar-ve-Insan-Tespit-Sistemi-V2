@@ -833,3 +833,5 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 - hasar_v2 epoch 9: 0.426, epoch 10: **0.430**, epoch 11: 0.407 (epoch 31 dk — CRASAR büyük ortomozaik işleme ile RAM çakışması, boş RAM ~2.6 GB).
 - ISBDA (MSNet/CMU, 1.030 görüntü, hafif/ağır/enkaz) Roboflow kopyası (vision-vu6w6/damage-severity-zl2jl v2, bina düzeyi + "No damage")
   indirilirken Claude Code bellek baskısıyla komutu durdurdu (sev.zip ~168/200 MB). Kullanıcı onayı ile yeniden başlatılacak.
+
+- 23:55: hasar_v2 epoch 12–18 birleşik val: 0.422 / – / 0.437 / 0.439 / 0.434 / **0.443** / 0.442. CRASAR train ~4.280 bina (yıkık 126, ağır 447, hafif 1.242, hasarsız 2.468).
