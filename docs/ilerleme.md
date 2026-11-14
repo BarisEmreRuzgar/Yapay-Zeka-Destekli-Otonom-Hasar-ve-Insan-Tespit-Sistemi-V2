@@ -835,3 +835,14 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
   indirilirken Claude Code bellek baskısıyla komutu durdurdu (sev.zip ~168/200 MB). Kullanıcı onayı ile yeniden başlatılacak.
 
 - 23:55: hasar_v2 epoch 12–18 birleşik val: 0.422 / – / 0.437 / 0.439 / 0.434 / **0.443** / 0.442. CRASAR train ~4.280 bina (yıkık 126, ağır 447, hafif 1.242, hasarsız 2.468).
+
+### 2026-11-15 00:30 — hasar_v2 (xBD + RescueNet drone) tamamlandı → drone bina hasarı 0.005 → **0.687**
+| RescueNet val (449 görüntü, 1.010 bina) mAP50 | 640 | 1024 | 1280 |
+|---|---|---|---|
+| hasar_v1 (yalnız xBD) | 0.067 | 0.040 | 0.029 |
+| **hasar_v2** | 0.673 | **0.687** | 0.661 |
+- hasar_v2 @1024 sınıflar: yıkık 0.686, ağır 0.635, hafif 0.629, hasarsız 0.798 (mAP50-95 0.502).
+- xBD val (544 döşeme): @768 **0.416** (yıkık 0.355, ağır 0.444, hafif 0.344, hasarsız 0.520), @1024 0.410.
+  Kıyas genis2 @640 0.410, hasar_v1 @768 0.409 → drone eklemek uyduyu bozmadı (+0.006).
+- Karar: hasar_v2 tek görüntü hasar modeli olarak benimsenecek aday; test seti (xBD test + RescueNet test) ölçümünden sonra
+  tahmin.py / README / demo'ya alınacak. Zincir 65 şimdi tek2d (drone panelleriyle sınıflandırıcı) eğitiyor.
