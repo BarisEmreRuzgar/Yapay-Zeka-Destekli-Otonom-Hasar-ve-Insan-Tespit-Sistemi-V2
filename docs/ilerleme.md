@@ -822,3 +822,9 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 - **Epoch 3 ağırlığı, RescueNet val @1024: mAP50 0.549** (yıkık 0.528, ağır 0.458, hafif 0.515, hasarsız 0.695);
   ana model aynı sette 0.005. Birleşik val (xBD+RescueNet) epoch 1–3: 0.395 / 0.378 / 0.403.
 - CRASAR: valid 3 ortomozaik bitti (LCSO 76 döşeme: yıkık 194, ağır 50, hafif 272, hasarsız 286); train sürüyor.
+
+### 2026-11-14 22:15 — PC yeniden başladı (19:48), zincir 65 ile sürdürme
+- hasar_v2 epoch 9/20 ortasında kesildi (epoch 1–8 birleşik val mAP50: 0.395 → **0.422** (ep7) → 0.414). `--devam` ile sürüyor.
+- Zincir 65 = zincir 63'ün kalanı (RescueNet/xBD değerlendirmeleri → tek2d drone sınıflandırıcı → bina_sonra).
+- CRASAR train 19:13'te HF xet CAS 401 ile düşmüştü (7 ortomozaik işlenmişti) → `crasar_veri.py` indirmeye 5 denemelik
+  yeniden deneme eklendi, `crasar_indir_train.ps1` ile kaldığı yerden sürüyor. Otomatik kayıt yeniden başlatıldı.
