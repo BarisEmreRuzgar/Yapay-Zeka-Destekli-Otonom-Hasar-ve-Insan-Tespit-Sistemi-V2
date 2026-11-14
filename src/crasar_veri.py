@@ -14,6 +14,7 @@ Sınıflar ana modelle aynı: 1 destroyed, 2 major-damage, 3 minor-damage, 4 no-
 import argparse
 import json
 import os
+import time
 from pathlib import Path
 
 import cv2
@@ -137,7 +138,17 @@ def main():
             vektorler = json.load(open(v_yol))
         except Exception:
             vektorler = []
-        tif = Path(hf_hub_download(DEPO, f.rfilename, repo_type="dataset", local_dir=HAM))
+        tif = None
+        for deneme in range(5):  # xet CAS ara sıra 401 veriyor (belirteç süresi) → yeniden dene
+            try:
+                tif = Path(hf_hub_download(DEPO, f.rfilename, repo_type="dataset", local_dir=HAM))
+                break
+            except Exception as e:
+                print(ad, f"indirme hatası (deneme {deneme + 1}/5):", repr(e)[:200], flush=True)
+                time.sleep(60 * (deneme + 1))
+        if tif is None:
+            print(ad, "atlandı (indirilemedi)", flush=True)
+            continue
         try:
             n, s = isle(tif, etiketler, vektorler, cikti, a.bolum, a.hedef_bina, a.doseme, sayac)
             print(f"{ad}: {f.size / 1e9:.2f} GB, ölçek {s:.3f}, {n} döşeme, toplam {sayac}", flush=True)
