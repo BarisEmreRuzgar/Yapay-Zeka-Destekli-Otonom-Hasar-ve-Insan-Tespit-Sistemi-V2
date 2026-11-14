@@ -828,3 +828,8 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 - Zincir 65 = zincir 63'ün kalanı (RescueNet/xBD değerlendirmeleri → tek2d drone sınıflandırıcı → bina_sonra).
 - CRASAR train 19:13'te HF xet CAS 401 ile düşmüştü (7 ortomozaik işlenmişti) → `crasar_veri.py` indirmeye 5 denemelik
   yeniden deneme eklendi, `crasar_indir_train.ps1` ile kaldığı yerden sürüyor. Otomatik kayıt yeniden başlatıldı.
+
+### 2026-11-14 23:00 — ISBDA (drone, eğik görüntü) indirme denemesi, bellek baskısı
+- hasar_v2 epoch 9: 0.426, epoch 10: **0.430**, epoch 11: 0.407 (epoch 31 dk — CRASAR büyük ortomozaik işleme ile RAM çakışması, boş RAM ~2.6 GB).
+- ISBDA (MSNet/CMU, 1.030 görüntü, hafif/ağır/enkaz) Roboflow kopyası (vision-vu6w6/damage-severity-zl2jl v2, bina düzeyi + "No damage")
+  indirilirken Claude Code bellek baskısıyla komutu durdurdu (sev.zip ~168/200 MB). Kullanıcı onayı ile yeniden başlatılacak.
