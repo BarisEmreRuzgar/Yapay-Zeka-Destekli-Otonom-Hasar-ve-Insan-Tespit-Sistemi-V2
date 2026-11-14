@@ -846,3 +846,14 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
   Kıyas genis2 @640 0.410, hasar_v1 @768 0.409 → drone eklemek uyduyu bozmadı (+0.006).
 - Karar: hasar_v2 tek görüntü hasar modeli olarak benimsenecek aday; test seti (xBD test + RescueNet test) ölçümünden sonra
   tahmin.py / README / demo'ya alınacak. Zincir 65 şimdi tek2d (drone panelleriyle sınıflandırıcı) eğitiyor.
+
+### 2026-11-15 01:55 — tek2d (drone panelleriyle bina sınıflandırıcı) + drone iki aşama
+- tek2d = tek1'den, xBD 48k + RescueNet train 8.766 + CRASAR train 4.933 panel; 10 epoch, val top1 0.684.
+| panel seti top1 | tek1 (sıfır-atış) | **tek2d** |
+|---|---|---|
+| RescueNet val (1.010 bina) | 0.460 | **0.768** (yıkık 0.91, ağır 0.68, hafif 0.61, hasarsız 0.86) |
+| CRASAR valid (1.049 bina) | 0.471 | **0.615** |
+| xBD (tek1 val) | 0.754 | 0.754 (unutma yok) |
+- RescueNet val, dedektör hasar_v2 @1024 + tek2d (src/tek2_yolo.py):
+  tek 0.660 / tek2 0.662 / **tek2+tek 0.695** (yıkık 0.737, ağır 0.648, hafif 0.622, hasarsız 0.773) → topluluk +0.035.
+- Sırada: bina_sonra (sonrası görüntüyle konum) eğitimi, sonra zincir 66 test ölçümleri.
