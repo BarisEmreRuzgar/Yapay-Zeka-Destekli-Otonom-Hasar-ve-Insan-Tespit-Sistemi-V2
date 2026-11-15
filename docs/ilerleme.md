@@ -872,3 +872,11 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
   Konum 0.53→0.61 iyileşti ama birleşim kazancı yine küçük (+0.002) → uyduda öncesiz iki aşama benimsenmedi.
 - tahmin.py: HASAR_MODEL (modeller/hasar_uzman.pt) varsa hasar sınıfları ondan, insanlar insan uzmanından. README güncel.
 - Sürüyor: zincir 67 (hasar_v3 = + CRASAR train, sonra tek2d_v2).
+
+### 2026-11-15 06:35 — hasar_v3 (xBD + RescueNet + CRASAR train, hasar_v2'den 12 epoch @1024)
+| val mAP50 | hasar_v2 | **hasar_v3** |
+|---|---|---|
+| CRASAR valid @1024 (206 döşeme) | 0.358 | **0.518** (yıkık .242, ağır .488, hafif .636, hasarsız .705) |
+| RescueNet val @1024 | 0.687 | **0.706** |
+| xBD val @768 | **0.416** | 0.407 |
+- Drone'da açık kazanç, uyduda −0.009. Zincir 68: v2⊕v3 çorbaları (0.3/0.7, 0.5/0.5) üç val setinde → karar.
