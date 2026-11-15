@@ -1,6 +1,6 @@
 """Hugging Face statik Space'i hazırlar: modeller tarayıcıda (onnxruntime-web, WebGPU/WASM) çalışır, sunucu gerekmez.
 
-Klasöre web_demo/index.html, ONNX'e çevrilmiş modeller (ana model, insan uzmanı, su modeli) ve örnek görüntüler kopyalanır.
+Klasöre web_demo/index.html, ONNX'e çevrilmiş modeller (hasar uzmanı, insan uzmanı, su modeli) ve örnek görüntüler kopyalanır.
 Tarayıcı sürümü Python'daki `src/tahmin.py` mantığını izler: hasar ana modelden (görüntünün ~1.33 katı ölçekte), insanlar
 uzmandan (1280 px); "döşemeli çıkarım" SAHI gibi %20 örtüşen döşemeler + tam görüntü ve GREEDYNMM (IOS 0.5) birleştirmesi.
 Örneklerde Python ile karşılaştırma: drone 68/68 insan (döşemeli 63/63); uydu kutularında ±1–4 fark (ölçekleme enterpolasyonu).
@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
-MODELLER = ["disastervision", "insan_uzman", "insan_su"]
+MODELLER = ["hasar_uzman", "insan_uzman", "insan_su"]
 ORNEKLER = ["drone_kalabalik.jpg", "uydu_hasar.jpg", "palu_sonra.jpg"]
 REPO = "https://github.com/BarisEmreRuzgar/Yapay-Zeka-Destekli-Otonom-Hasar-ve-Insan-Tespit-Sistemi-V2"
 BASLIK = f"""---
