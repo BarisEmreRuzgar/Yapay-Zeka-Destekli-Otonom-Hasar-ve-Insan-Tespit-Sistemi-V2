@@ -25,6 +25,9 @@ INSAN_MODEL = KOK / "modeller" / "insan_uzman.pt"
 # kara SAR'da genel modelden kötü (0.820) — yalnız su/sel sahnesinde kullanılır.
 SU_MODEL = KOK / "modeller" / "insan_su.pt"
 INSAN_BOYUT, INSAN_DILIM = 1280, 960
+# Yalnız bina hasarı (hasar_v2): xBD uydu + RescueNet drone, 1024 px. Test mAP50 (ana model → hasar_v2):
+# RescueNet drone 0.000 → 0.693, xBD uydu (tek görüntü) 0.294 → 0.299. Varsa hasar bu modelden alınır.
+HASAR_MODEL = KOK / "modeller" / "hasar_uzman.pt"
 
 # BGR; insan dikkat çeksin diye parlak camgöbeği, hasar yeşilden kırmızıya
 RENKLER = {"person": (255, 255, 0), "destroyed": (0, 0, 220), "major-damage": (0, 120, 255),
@@ -41,10 +44,13 @@ def cikarim_boyutu(uzun_kenar: int) -> int:
 
 
 def tespit(goruntu_bgr: np.ndarray, model_yolu=VARSAYILAN_MODEL, conf=0.3, dilimle=False, dilim=640,
-           insan_modeli=INSAN_MODEL):
-    """[(sınıf_adı, güven, x1, y1, x2, y2), ...] döndürür. insan_modeli verilirse (ve dosya varsa) insanlar
-    ana modelden değil, ondan alınır; hasar her zaman ana modelden gelir."""
+           insan_modeli=INSAN_MODEL, hasar_modeli=HASAR_MODEL):
+    """[(sınıf_adı, güven, x1, y1, x2, y2), ...] döndürür. insan_modeli / hasar_modeli verilirse (ve dosya varsa)
+    insanlar / hasar ana modelden değil, o uzman modelden alınır."""
     t = _calistir(goruntu_bgr, model_yolu, conf, dilimle, dilim, None)
+    if hasar_modeli and Path(hasar_modeli).exists():
+        t = [x for x in t if x[0] == "person"] + [
+            x for x in _calistir(goruntu_bgr, hasar_modeli, conf, dilimle, dilim, None) if x[0] != "person"]
     if insan_modeli and Path(insan_modeli).exists():
         t = [x for x in t if x[0] != "person"] + _calistir(goruntu_bgr, insan_modeli, conf, dilimle, INSAN_DILIM, INSAN_BOYUT)
     return t

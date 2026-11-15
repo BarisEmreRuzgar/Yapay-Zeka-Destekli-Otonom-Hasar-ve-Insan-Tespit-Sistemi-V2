@@ -78,10 +78,27 @@ Proje daha önce *"mevcut veri setlerinin çeşitlilik ve miktar olarak yetersiz
 | İnsan, nehir/sal drone videosu (Tambo test) | — | — | **0.386** (v8: 0.123; v16: 0.423; su modu v3: 0.448) |
 | İnsan, sudaki yüzücüler (su test, su modu) | — | — | **0.639** (su modu v3; su2: 0.611) |
 | Bina hasarı, xBD test mAP50 | 0.054 | 0.294 | **0.511** (iki aşama: konum + öncesi/sonrası sınıflandırıcı) |
+| Bina hasarı, **drone** (RescueNet test, 450 görüntü, Michael kasırgası), mAP50 | — | 0.000 | **0.693** (hasar uzmanı, 1024 px) |
+| Bina hasarı, xBD test, **yalnız sonrası görüntü** (öncesi yoksa), mAP50 | 0.054 | 0.294 | **0.299** (hasar uzmanı) |
 
 Ayrıntılar ve tüm ara sürümler aşağıdaki bölümlerde; deney günlüğü `docs/ilerleme.md`.
 
 **Yorum:** Orijinal model yalnızca eğitildiği veriye benzeyen görüntülerde çalışıyordu (Roboflow testi 0.50). Gerçek drone görüntüsünde insanları neredeyse hiç bulamıyor (0.02), başka afetlerde de hasarı göremiyordu (0.05). Yeni model orijinal testte aynı seviyede kalırken bağımsız testlerde **5–15 kat** daha iyi.
+
+### Hasar uzmanı: drone görüntüsünde bina hasarı
+Ana model hasarı yalnız uydudan (xBD) öğrendi; drone görüntüsünde binaları neredeyse hiç tanımıyordu (RescueNet drone testi 0.000).
+Ayrı bir **yalnız-hasar** modeli (`modeller/hasar_uzman.pt`, hasar_v2) 1024 px'te xBD + **RescueNet** (Michael kasırgası sonrası
+drone görüntüleri, 3.595 eğitim görüntüsü; segmentasyon maskelerinden bina kutuları çıkarıldı, `src/rescuenet_veri.py`) ile eğitildi.
+`tahmin.py` hasarı artık bu modelden alıyor (dosya yoksa ana modele düşer).
+
+| mAP50 | Ana model | **Hasar uzmanı** |
+| :--- | :---: | :---: |
+| RescueNet drone val (449 görüntü, 1.010 bina) | 0.005 | **0.687** |
+| RescueNet drone **test** (450 görüntü, tek seferlik) | 0.000 | **0.693** (yıkık .761 / ağır .653 / hafif .581 / hasarsız .776) |
+| CRASAR-U-DROIDs drone (farklı afetler, 206 döşeme, eğitimde yok) | — | 0.358 |
+| xBD uydu val / test | 0.410 / 0.294 | 0.416 / **0.299** |
+
+Drone eklemek uydu başarımını bozmadı. CRASAR (farklı kasırgalar, farklı çekim) hâlâ zayıf; bu veriyle eğitim sürüyor.
 
 ### İnsan uzmanı: arama-kurtarma verisiyle
 Ana model hasar ve insanı birlikte 640 px'te öğreniyor; birkaç piksellik insanlar için hem ölçek hem veri yetersiz.
@@ -89,7 +106,7 @@ Ayrı bir **yalnız-insan** modeli (`modeller/insan_uzman.pt`, şu an v18) 1280 
 Roboflow Universe'ten iki arama-kurtarma seti (4K drone videoları ve SARD: moloz/kaya arasında kısmen gizli insanlar).
 Universe setleri kareleri rastgele bölüyor (ardışık, neredeyse aynı kareler train ile test'e düşüyor); burada
 doğrulama **video / kare aralığı bazında** ayrıldı, hiçbir doğrulama karesi ya da komşusu eğitimde yok.
-`tahmin.py` ve uygulama insanları artık bu modelden, hasarı ana modelden alıyor.
+`tahmin.py` ve uygulama insanları artık bu modelden alıyor (hasarı ise yukarıdaki hasar uzmanından).
 
 | İnsan AP50 | Ana model (1280) | Uzman v1 | Uzman v2 | Uzman v5 | Uzman v7 | Uzman v8 | Uzman v11 | Uzman v14 | Uzman v16 | **Uzman v18 (etkin)** |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |

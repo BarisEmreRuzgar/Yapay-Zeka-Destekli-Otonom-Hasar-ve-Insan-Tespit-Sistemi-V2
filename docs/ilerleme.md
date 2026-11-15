@@ -861,3 +861,14 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 - 03:00: CRASAR train bitti (1.401 döşeme; yıkık 375, ağır 1.078, hafif 3.384, hasarsız 6.437). bina_sonra epoch 13 val 0.611. Zincir 67 kuruldu (66'dan sonra): hasar_v2 CRASAR sıfır-atış → hasar_v3 (xBD+RescueNet+CRASAR, 12 epoch) → tek2d_v2 (tam CRASAR panelleri).
 
 - 03:30: bina_sonra (sonrası görüntüyle sınıf-bağımsız bina konumu, bina_konum.pt'den 20 epoch @640) val mAP50 **0.620** (ep 19). Kıyas: sonrası görüntüde bina_konum 0.530, ana model kutuları 0.562. İki aşama (tek2) val ölçümü sürüyor.
+
+### 2026-11-15 04:40 — hasar_v2 benimsendi (modeller/hasar_uzman.pt), test ölçümleri
+| mAP50 | ana model (disastervision.pt) | **hasar_v2** |
+|---|---|---|
+| RescueNet drone **test** @1024 (450 görüntü) | 0.000 | **0.693** (yıkık .761, ağır .653, hafif .581, hasarsız .776) |
+| xBD **test** tek görüntü (ana @640, v2 @768) | 0.294 | **0.299** |
+| CRASAR valid @1024 (eğitimde yok) | – | 0.358 (yıkık .166, ağır .220, hafif .458, hasarsız .589) |
+- Öncesiz iki aşama, konum = bina_sonra: xBD val tek 0.398 / tek2 0.375 / tek2+tek 0.400 (sonrası konum AP50 0.613).
+  Konum 0.53→0.61 iyileşti ama birleşim kazancı yine küçük (+0.002) → uyduda öncesiz iki aşama benimsenmedi.
+- tahmin.py: HASAR_MODEL (modeller/hasar_uzman.pt) varsa hasar sınıfları ondan, insanlar insan uzmanından. README güncel.
+- Sürüyor: zincir 67 (hasar_v3 = + CRASAR train, sonra tek2d_v2).
