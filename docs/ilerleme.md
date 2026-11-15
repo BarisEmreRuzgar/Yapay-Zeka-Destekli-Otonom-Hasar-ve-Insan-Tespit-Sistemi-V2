@@ -857,3 +857,5 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 - RescueNet val, dedektör hasar_v2 @1024 + tek2d (src/tek2_yolo.py):
   tek 0.660 / tek2 0.662 / **tek2+tek 0.695** (yıkık 0.737, ağır 0.648, hafif 0.622, hasarsız 0.773) → topluluk +0.035.
 - Sırada: bina_sonra (sonrası görüntüyle konum) eğitimi, sonra zincir 66 test ölçümleri.
+
+- 03:00: CRASAR train bitti (1.401 döşeme; yıkık 375, ağır 1.078, hafif 3.384, hasarsız 6.437). bina_sonra epoch 13 val 0.611. Zincir 67 kuruldu (66'dan sonra): hasar_v2 CRASAR sıfır-atış → hasar_v3 (xBD+RescueNet+CRASAR, 12 epoch) → tek2d_v2 (tam CRASAR panelleri).
