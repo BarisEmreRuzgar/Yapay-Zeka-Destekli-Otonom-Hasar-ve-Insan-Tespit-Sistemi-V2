@@ -880,3 +880,14 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 | RescueNet val @1024 | 0.687 | **0.706** |
 | xBD val @768 | **0.416** | 0.407 |
 - Drone'da açık kazanç, uyduda −0.009. Zincir 68: v2⊕v3 çorbaları (0.3/0.7, 0.5/0.5) üç val setinde → karar.
+
+### 2026-11-15 08:40 — tek2d_v2 + v2⊕v3 çorbaları → hasar_v3 seçildi
+| val mAP50 | hasar_v3 | 0.3·v2+0.7·v3 | 0.5·v2+0.5·v3 |
+|---|---|---|---|
+| CRASAR valid | **0.518** | 0.496 | 0.468 |
+| RescueNet val | **0.706** | **0.706** | 0.704 |
+| xBD val @768 | 0.407 | 0.413 | **0.416** |
+| ortalama | **0.544** | 0.538 | 0.529 |
+- Çorba uyduyu geri getiriyor ama CRASAR kazancını yiyor → hasar_v3 tek başına (xBD −0.009, sınır −0.01 içinde).
+- tek2d_v2 (tam CRASAR panelleri, 11.558) drone panelleri top1: RescueNet 0.768 → **0.777**, CRASAR 0.615 → **0.651**, xBD 0.754 → 0.753.
+- Zincir 69: test ölçümleri (RescueNet test, xBD test) + CRASAR **test** bölümü indiriliyor (8 ortomozaik, 10.7 GB; eğitimde hiç yok).
