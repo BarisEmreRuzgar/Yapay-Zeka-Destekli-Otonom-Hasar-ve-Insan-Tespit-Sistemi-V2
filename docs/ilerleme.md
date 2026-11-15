@@ -859,3 +859,5 @@ xBD val 1.446 döşeme (iki aşama val ayrımı):
 - Sırada: bina_sonra (sonrası görüntüyle konum) eğitimi, sonra zincir 66 test ölçümleri.
 
 - 03:00: CRASAR train bitti (1.401 döşeme; yıkık 375, ağır 1.078, hafif 3.384, hasarsız 6.437). bina_sonra epoch 13 val 0.611. Zincir 67 kuruldu (66'dan sonra): hasar_v2 CRASAR sıfır-atış → hasar_v3 (xBD+RescueNet+CRASAR, 12 epoch) → tek2d_v2 (tam CRASAR panelleri).
+
+- 03:30: bina_sonra (sonrası görüntüyle sınıf-bağımsız bina konumu, bina_konum.pt'den 20 epoch @640) val mAP50 **0.620** (ep 19). Kıyas: sonrası görüntüde bina_konum 0.530, ana model kutuları 0.562. İki aşama (tek2) val ölçümü sürüyor.
